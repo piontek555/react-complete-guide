@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import classes from './App.css';
-import Person from './Person/Person'
+import Person from './Person/Person';
+// import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 
 class App extends Component {
   state = {
@@ -14,9 +15,9 @@ class App extends Component {
   }
 
   nameChangedHandler = ( event, id ) => {
-    const personIndex = this.state.person.findIndex(p => {
+    const personIndex = this.state.persons.findIndex(p => {
       return p.id === id;
-    });
+    } );
 
     const person = {
       ...this.state.persons[personIndex]
@@ -27,10 +28,9 @@ class App extends Component {
     person.name = event.target.value;
 
     const persons = [...this.state.persons];
-    persons[personIndex] = persons;
+    persons[personIndex] = person;
     
-
-    this.setState({ persons: person })
+    this.setState({ persons: persons })
   }
 
   deletePersonHander = (personIndex) => {
@@ -69,11 +69,11 @@ class App extends Component {
     const assignedClasses = [];
 
     if (this.state.persons.length <= 2) {
-      assignedClasses.push('red');
+      assignedClasses.push(classes.red);
     }
 
     if (this.state.persons.length <= 1 ) {
-      assignedClasses.push('bold');
+      assignedClasses.push(classes.bold);
     }
 
     return (
