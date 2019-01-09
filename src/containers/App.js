@@ -7,6 +7,8 @@ import withClassAlt from '../hoc/withClassAlt';
 import Aux from '../hoc/Auxiliary';
 // import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 
+export const AuthContext = React.createContext(false);
+
 class App extends PureComponent {
   constructor(props) {
     super(props);
@@ -19,7 +21,8 @@ class App extends PureComponent {
       ],
       otherState: 'Some other state',
       showPersons: false,
-      toggleClicked: 0
+      toggleClicked: 0,
+      authenticated: false
     }
   }
 
@@ -81,6 +84,12 @@ class App extends PureComponent {
     });
   }
 
+  loginHandler = () => {
+    this.setState({
+      authenticated: true
+    })
+  }
+
   render() {
     console.log('[App.js] Inside render()');
     let persons = null;
@@ -100,8 +109,11 @@ class App extends PureComponent {
             appTitle={this.props.title}
             showPersons={this.state.showPersons}
             persons={this.state.persons}
+            login={this.loginHandler}
             clicked={this.tooglePersonHandler} />
-          {persons}
+            <AuthContext.Provider value={this.state.authenticated}>
+              {persons}
+            </AuthContext.Provider>
         </Aux>
         // </WithClass>
     );
